@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gestion_Certif.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20240827222627_first")]
+    [Migration("20240827223421_first")]
     partial class first
     {
         /// <inheritdoc />

@@ -93,13 +93,13 @@ namespace Gestion_Certif.Migrations
                         column: x => x.AllCertifId,
                         principalTable: "AllCertifs",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Request_Certifs_Certificats_CertificatId",
                         column: x => x.CertificatId,
                         principalTable: "Certificats",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
