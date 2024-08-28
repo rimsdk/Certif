@@ -5,15 +5,18 @@ namespace Gestion_Certif.ViewModels
 {
     public class AddCertificateVM
     {
-        public int Id { get; set; } // Maps to Certificat.id
+        
+        
+            public int Id { get; set; }
+            public string CertifName { get; set; }
+            public string? CertifPictureUrl { get; set; }
+        public byte[]? uploadCertiftifUrl { get; set; }
 
-        public string? CertifName { get; set; } // Maps to Certificat.certifName
+        public DateTime AchievementDate { get; set; }
+            public int DepartementId { get; set; }
+            public int UserId { get; set; }
+        
 
-        public byte[]? CertifUrl { get; set; } // Maps to Certificat.uploadCertiftifUrl
-
-        public int DepartementId { get; set; } // Maps to Certificat.DepartementId
-
-        public string? CertifPictureUrl { get; set; }
 
 
     }

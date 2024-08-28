@@ -11,7 +11,7 @@ namespace Gestion_Certif.Mappers
             {
                 id = viewModel.Id,
                 certifName = viewModel.CertifName ?? string.Empty, // Handle null values
-                uploadCertiftifUrl = viewModel.CertifUrl, // This is nullable
+                uploadCertiftifUrl = viewModel.uploadCertiftifUrl, // This is nullable
                 DepartementId = viewModel.DepartementId , // Handle null values
                 CertifPictureUrl = viewModel.CertifPictureUrl ?? string.Empty // Handle null values
                 // Note: `achievementDate` and `userId` are not included in AddCertificateVM
@@ -24,7 +24,7 @@ namespace Gestion_Certif.Mappers
             {
                 Id = model.id,
                 CertifName = model.certifName,
-                CertifUrl = model.uploadCertiftifUrl,
+                uploadCertiftifUrl = model.uploadCertiftifUrl,
                 DepartementId = model.DepartementId,
                 CertifPictureUrl = model.CertifPictureUrl
             };

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using static Gestion_Certif.ViewModels.AddCertificateVM;
 
 namespace Gestion_Certif.Service
 {
@@ -25,21 +26,20 @@ namespace Gestion_Certif.Service
             var certificate = CertificateMapper.ToModel(certificateVM);
             await _certificateRepository.AddCertif(certificate);
         }
-
-        public async Task DeleteCertif(int certificateId)
+        public Task<AddCertificateVM> GetById(int id)
         {
-            var certificate = await _certificateRepository.GetCertifById(certificateId);
-            if (certificate == null)
-                throw new KeyNotFoundException("Certificat not found");
-
-            await _certificateRepository.DeleteCertif(certificate);
+            return _certificateRepository.GetById(id);
         }
 
-        public Task<IEnumerable<Certificat>> GetAllCertif()
+        public Task DeleteCertif(int id)
+        {
+            return _certificateRepository.DeleteCertif(id);
+        }
+
+        public Task<IEnumerable<AddCertificateVM>> GetAllCertif()
         {
             return _certificateRepository.GetAllCertif();
         }
-
         public Task<Certificat> GetCertifById(int id)
         {
             return _certificateRepository.GetCertifById(id);

@@ -5,6 +5,7 @@ using Gestion_Certif.Service;
 using Gestion_Certif.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static Gestion_Certif.ViewModels.AddCertificateVM;
 //nihal
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,20 +16,20 @@ namespace Gestion_Certif.Controllers
     public class CertificateController : ControllerBase
     {
         private readonly ICertificateService _certificateService;
-       
-         
+
+
 
         public CertificateController(ICertificateService certificateService)
         {
             _certificateService = certificateService;
-          
+
         }
 
         // GET: api/Certificate
         [HttpGet]
-        public async Task<ActionResult> GetCertificats()
+        public async Task<ActionResult<IEnumerable<AddCertificateVM>>> GetCertificats()
         {
-            var certificates =  await _certificateService.GetAllCertif();
+            var certificates = await _certificateService.GetAllCertif();
             return Ok(certificates);
         }
 
@@ -54,15 +55,17 @@ namespace Gestion_Certif.Controllers
 
         // GET api/Certificate/5
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetCertificat(int id)
+        public async Task<ActionResult<AddCertificateVM>> GetCertificatById(int id)
         {
-            var certificat = await _certificateService.GetCertifById(id);
-            if (certificat == null)
+            try
+            {
+                var certificat = await _certificateService.GetById(id);
+                return Ok(certificat);
+            }
+            catch (KeyNotFoundException)
             {
                 return NotFound();
             }
-            var viewModel =   CertificateMapper.ToViewModel(certificat);
-            return Ok(viewModel);
         }
 
         // POST api/Certificate
@@ -74,7 +77,7 @@ namespace Gestion_Certif.Controllers
                 return BadRequest(ModelState);
             }
 
-           
+
             //var certificat = CertificateMapper.ToModel(addCertificateVM);
             await _certificateService.AddCertif(addCertificateVM);
             return CreatedAtAction("GetCertificat", new { id = addCertificateVM.Id }, addCertificateVM);
@@ -94,33 +97,38 @@ namespace Gestion_Certif.Controllers
                 return BadRequest(new { Message = "ID in URL does not match ID in body." });
             }
 
-            var existingCertificat = _certificateService.GetCertifById(id);
+            var existingCertificat = _certificateService.GetById(id);
             if (existingCertificat == null)
             {
                 return NotFound(new { Message = "Certificat not found." });
             }
 
-            
+
 
             _certificateService.UpdateCertif(updateCertificateVM);
             return Ok(new { Message = "The update was successful." });
         }
 
-        // DELETE api/Certificate/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCertificat(int id)
         {
-            var certificat = await  _certificateService.GetCertifById(id);
-            if (certificat == null)
+            try
+            {
+                var certificat = await _certificateService.GetById(id);
+                if (certificat == null)
+                {
+                    return NotFound(new { Message = "Certificat not found." });
+                }
+
+                await _certificateService.DeleteCertif(id);  // Passez l'ID, pas l'objet
+                return Ok(new { Message = "Certificat deleted successfully." });
+            }
+            catch (KeyNotFoundException)
             {
                 return NotFound(new { Message = "Certificat not found." });
             }
 
-              await _certificateService.DeleteCertif(certificat);
-            return Ok(new { Message = "Certificat deleted successfully." });
+
         }
-
-
     }
 }
-

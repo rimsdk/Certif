@@ -17,5 +17,7 @@ namespace Gestion_Certif.Model
         public int? ReceiverId { get; set; }
         public User Receiver { get; set; }
 
+
+
     }
 }

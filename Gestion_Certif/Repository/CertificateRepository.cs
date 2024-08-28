@@ -1,6 +1,7 @@
 ﻿using Gestion_Certif.Model;
 using Gestion_Certif.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using static Gestion_Certif.ViewModels.AddCertificateVM;
 
 namespace Gestion_Certif.Repository
 {
@@ -23,20 +24,49 @@ namespace Gestion_Certif.Repository
             }
         }
 
-        public async Task DeleteCertif(Certificat certificat)
+        public async Task DeleteCertif(int id)
         {
-            var certificate = await GetCertifById(certificat.id);
-            if (certificate != null)
+            var certificat = await _context.Certificats.FindAsync(id);
+            if (certificat != null)
             {
-                _context.Certificats.Remove(certificate);
+                _context.Certificats.Remove(certificat);
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<AddCertificateVM> GetById(int id)
+        {
+            var certificat = await _context.Certificats
+                .Where(c => c.id == id)
+                .Select(c => new AddCertificateVM
+                {
+                    Id = c.id,
+                    CertifName = c.certifName,
+                    CertifPictureUrl = c.CertifPictureUrl,
+                    AchievementDate = c.achievementDate,
+                    DepartementId = c.DepartementId,
+                    UserId = c.userId
+                })
+                .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<Certificat>> GetAllCertif()
+            if (certificat == null)
+            {
+                throw new KeyNotFoundException("Certificat not found");
+            }
+
+            return certificat;
+        }
+        public async Task<IEnumerable<AddCertificateVM>> GetAllCertif()
         {
             return await _context.Certificats
-                .Include(c => c.departement) // Include Departement details
+                .Select(c => new AddCertificateVM
+                {
+                    Id = c.id,
+                    CertifName = c.certifName,
+                    CertifPictureUrl = c.CertifPictureUrl,
+                    AchievementDate = c.achievementDate,
+                    DepartementId = c.DepartementId,
+                    UserId = c.userId
+                })
                 .ToListAsync();
         }
 
