@@ -78,13 +78,24 @@ namespace Gestion_Certif.Service
                 await _certificateRepository.UpdateCertif(certificat);
             }
         }
-        /*
-        public Task<IEnumerable<Certificat>> GetSharedCertifsAsync()
+
+        public Task<List<CertificateWithCollaboratorCountVM>> GetAllCollaboratorsAsync()
         {
-            return _certificateRepository.GetSharedCertifsAsync();
+            return _certificateRepository.GetAllCollaboratorsAsync();
         }
-        */
+
+       
+        public async Task<List<CertificateData>> GetTopApprovedCertificatesAsync()
+        {
+            return await _certificateRepository.GetCertificatesWithMostApprovalsAsync();
+        }
+
         public Task DeleteCertif(Certificat certificat)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<CertificateData>> GetSharedCertifsAsync()
         {
             throw new NotImplementedException();
         }

@@ -12,5 +12,8 @@ namespace Gestion_Certif.Service
         Task AddCertif(AddCertificateVM certificat);
         Task UpdateCertif(UpdateCertificateVM certificat);
         Task DeleteCertif(int id);
+        Task<IEnumerable<CertificateData>> GetSharedCertifsAsync();
+        Task<List<CertificateWithCollaboratorCountVM>> GetAllCollaboratorsAsync();
+        Task<List<CertificateData>> GetTopApprovedCertificatesAsync();
     }
 }

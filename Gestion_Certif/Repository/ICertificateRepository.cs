@@ -15,5 +15,7 @@ namespace Gestion_Certif.Repository
         Task<List<CertificateWithCollaboratorCountVM>> GetAllCollaboratorsAsync();
         Task<List<Certificat>> GetCertifsByDepartement(int departementId);
 
+        Task<List<CertificateData>> GetCertificatesWithMostApprovalsAsync();
+
     }
 }
