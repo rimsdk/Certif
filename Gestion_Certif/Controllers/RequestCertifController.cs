@@ -34,10 +34,11 @@ namespace Gestion_Certif.Controllers
                 status = "Pending",
                 decisionReason = string.Empty,
                 required = dto.Required,
-                CertificatId = dto.CertificatId,
                 SenderId = dto.SenderId,
-                ReceiverId = dto.ReceiverId
-            };
+                ReceiverId = dto.ReceiverId,
+               AllCertifId = dto.AllCertifId,
+
+    };
 
             _context.Request_Certifs.Add(requestCertif);
 
@@ -79,9 +80,9 @@ namespace Gestion_Certif.Controllers
                     Status = rc.status,
                     DecisionReason = rc.decisionReason,
                     Required = rc.required,
-                    CertificatId = rc.CertificatId,
                     SenderId = rc.SenderId,
-                    ReceiverId = rc.ReceiverId
+                    ReceiverId = rc.ReceiverId,
+                    AllCertifId = rc.AllCertifId,
                 })
                 .ToListAsync();
 
@@ -102,9 +103,9 @@ namespace Gestion_Certif.Controllers
                     Status = r.status,
                     DecisionReason = r.decisionReason,
                     Required = r.required,
-                    CertificatId = r.CertificatId,
                     SenderId = r.SenderId,
-                    ReceiverId = r.ReceiverId
+                    ReceiverId = r.ReceiverId,
+                    AllCertifId = r.AllCertifId,
                 })
                 .ToListAsync();
 
@@ -130,9 +131,9 @@ namespace Gestion_Certif.Controllers
                     Status = r.status,
                     DecisionReason = r.decisionReason,
                     Required = r.required,
-                    CertificatId = r.CertificatId,
                     SenderId = r.SenderId,
-                    ReceiverId = r.ReceiverId
+                    ReceiverId = r.ReceiverId,
+                    AllCertifId = r.AllCertifId,
                 })
                 .ToListAsync();
 

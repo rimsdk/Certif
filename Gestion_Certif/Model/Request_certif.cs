@@ -10,8 +10,6 @@ namespace Gestion_Certif.Model
         public string status { get; set; }
         public string decisionReason { get; set; }
         public Boolean required { get; set; }
-        public int CertificatId { get; set; }
-        public Certificat certifs { get; set; }
         public int? SenderId { get; set; }
         public User Sender { get; set; }
         public int AllCertifId { get; set; }

@@ -9,8 +9,9 @@ namespace Gestion_Certif.ViewModels
         public string Status { get; set; }
         public string DecisionReason { get; set; }
         public bool Required { get; set; }
-        public int CertificatId { get; set; }
         public int? SenderId { get; set; }
+        public int AllCertifId { get; set; }
+
         public int? ReceiverId { get; set; }
     }
 }

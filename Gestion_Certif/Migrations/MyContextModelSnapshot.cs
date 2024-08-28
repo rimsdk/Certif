@@ -115,9 +115,6 @@ namespace Gestion_Certif.Migrations
                     b.Property<int>("AllCertifId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CertificatId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ReceiverId")
                         .HasColumnType("int");
 
@@ -141,8 +138,6 @@ namespace Gestion_Certif.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("AllCertifId");
-
-                    b.HasIndex("CertificatId");
 
                     b.HasIndex("ReceiverId");
 
@@ -200,8 +195,6 @@ namespace Gestion_Certif.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("DepartementId");
-
-                    b.HasIndex("Request_certifId");
 
                     b.ToTable("Users");
 
@@ -262,12 +255,6 @@ namespace Gestion_Certif.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Gestion_Certif.Model.Certificat", "certifs")
-                        .WithMany()
-                        .HasForeignKey("CertificatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Gestion_Certif.Model.User", "Receiver")
                         .WithMany("ReceivedRequests")
                         .HasForeignKey("ReceiverId")
@@ -283,8 +270,6 @@ namespace Gestion_Certif.Migrations
                     b.Navigation("Receiver");
 
                     b.Navigation("Sender");
-
-                    b.Navigation("certifs");
                 });
 
             modelBuilder.Entity("Gestion_Certif.Model.User", b =>
@@ -293,13 +278,7 @@ namespace Gestion_Certif.Migrations
                         .WithMany()
                         .HasForeignKey("DepartementId");
 
-                    b.HasOne("Gestion_Certif.Model.Request_certif", "request")
-                        .WithMany()
-                        .HasForeignKey("Request_certifId");
-
                     b.Navigation("departement");
-
-                    b.Navigation("request");
                 });
 
             modelBuilder.Entity("Gestion_Certif.Model.Departement", b =>
