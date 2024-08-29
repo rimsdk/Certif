@@ -15,7 +15,18 @@ namespace Gestion_Certif.Controllers
         {
             _allCertifService = allCertifService;
         }
-        [HttpGet]
+        [HttpGet("by-departement")]
+        public async Task<ActionResult<IEnumerable<AllCertifVM>>> GetCertifsByDepartement([FromQuery] int departementId, [FromQuery] string departementName)
+        {
+           
+
+            var certifs = await _allCertifService.GetCertifsByDepartementAsync(departementId);
+            return Ok(certifs);
+        }
+
+        
+    
+    [HttpGet]
         public async Task<ActionResult<IEnumerable<AllCertifVM>>> GetAllCertifs()
         {
             var certifs = await _allCertifService.GetAllCertifsAsync();

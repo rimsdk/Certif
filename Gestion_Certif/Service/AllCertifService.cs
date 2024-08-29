@@ -61,5 +61,14 @@ namespace Gestion_Certif.Service
             await _allCertifRepository.DeleteAsync(certif);
             return true;
         }
-    }
+        // Ajouter la méthode pour récupérer les certificats par ID de département
+        public async Task<IEnumerable<AllCertifVM>> GetCertifsByDepartementAsync(int departementId)
+        {
+            var certifs = await _allCertifRepository.GetAllAsync();
+            return certifs
+                .Where(certif => certif.DepartementId == departementId && certif.departement.name == "all")
+                .Select(certif => AllCertifMapper.ToViewModel(certif));
+        }
+    
+}
 }
