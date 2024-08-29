@@ -10,7 +10,14 @@ public class MappingProfile : Profile
         CreateMap<User, UserVM>()
             .ForMember(dest => dest.Departement, opt => opt.MapFrom(src => src.departement))
             .ForMember(dest => dest.DepartementId, opt => opt.MapFrom(src => src.DepartementId))
-            .ReverseMap(); 
+            .ReverseMap();
+
+        CreateMap<AllCertif, AllCertifVM>()
+           .ForMember(dest => dest.CertifName, opt => opt.MapFrom(src => src.certifName))
+           .ForMember(dest => dest.CertifUrl, opt => opt.MapFrom(src => src.certifUrl))
+           .ForMember(dest => dest.DepartementId, opt => opt.MapFrom(src => src.DepartementId))
+           .ForMember(dest => dest.CertifPictureUrl, opt => opt.MapFrom(src => src.CertifPictureUrl))
+           .ReverseMap();
 
     }
 }
