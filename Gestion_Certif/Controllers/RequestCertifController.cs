@@ -185,5 +185,57 @@ namespace Gestion_Certif.Controllers
         {
             return _context.Request_Certifs.Any(e => e.id == id);
         }
+        // GET: api/RequestCertif/{id}/received-certifs
+        [HttpGet("{id}/received-certifs")]
+        public async Task<ActionResult<IEnumerable<AddRequest_certifVM>>> GetReceivedCertif(int id)
+        {
+            var receivedCertifs = await _context.Request_Certifs
+                .Where(rc => rc.ReceiverId == id)
+                .Select(rc => new AddRequest_certifVM
+                {
+                    Id = rc.id,
+                    RequestDate = rc.requestDate,
+                    Status = rc.status,
+                    DecisionReason = rc.decisionReason,
+                    Required = rc.required,
+                    SenderId = rc.SenderId,
+                    ReceiverId = rc.ReceiverId,
+                    AllCertifId = rc.AllCertifId,
+                    SenderName = rc.Sender.username,
+                })
+                .ToListAsync();
+
+            if (!receivedCertifs.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(receivedCertifs);
+        }
+        [HttpGet("senderProfiles")]
+        public async Task<IActionResult> GetSenderProfiles([FromQuery] List<int> ids)
+        {
+            if (ids == null || !ids.Any())
+            {
+                return BadRequest("No IDs provided.");
+            }
+
+            var profiles = await _context.Users
+                .Where(user => ids.Contains(user.id))
+                .Select(user => new
+                {
+                    user.id,
+                    user.username,
+                    user.email,
+                    user.role,
+                    user.DepartementId,
+                    user.Request_certifId,
+                    user.ProfilePictureUrl
+                })
+                .ToListAsync();
+
+            return Ok(profiles);
+        }
+
     }
 }

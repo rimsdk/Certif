@@ -82,11 +82,11 @@ namespace Gestion_Certif.Repository
             _context.Entry(certificat).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
-        /*
+        
         public async Task<List<CertificateInfo>> GetCertificatesWithMostApprovalsAsync()
         {
             return await _context.Request_Certifs
-                .Join(_context.Certificats, rc => rc.CertificatId, c => c.id, (rc, c) => new { rc, c })
+                .Join(_context.Certificats, rc => rc.AllCertifId, c => c.id, (rc, c) => new { rc, c })
                 .Join(_context.Departements, crc => crc.c.DepartementId, d => d.id, (crc, d) => new { crc.rc, crc.c, d })
                 .Where(x => x.rc.status == "Approved")
                 .GroupBy(x => new { x.c.id, x.c.certifName, x.d.name })
@@ -101,7 +101,7 @@ namespace Gestion_Certif.Repository
                 .ThenBy(x => x.DepartmentName)
                 .ToListAsync();
         }
-        */
+        
         public async Task<List<Certificat>> GetCertifsByDepartement(int departementId)
         {
             return await _context.Certificats

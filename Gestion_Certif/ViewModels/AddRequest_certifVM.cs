@@ -11,7 +11,7 @@ namespace Gestion_Certif.ViewModels
         public bool Required { get; set; }
         public int? SenderId { get; set; }
         public int AllCertifId { get; set; }
-
+        public string? SenderName { get; set; }
         public int? ReceiverId { get; set; }
     }
 }
