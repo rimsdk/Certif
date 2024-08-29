@@ -1,4 +1,5 @@
 using Gestion_Certif.Extensions;
+using Gestion_Certif.Mappers;
 using Gestion_Certif.Model;
 using Gestion_Certif.Repositories;
 using Gestion_Certif.Repository;
@@ -16,6 +17,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 var builder = WebApplication.CreateBuilder(args);
+
+//builder.Services.AddAutoMapper(typeof(AllCertifProfile)); // Utilisez le profil pour configurer les mappings
 
 // Add services to the container.
 
@@ -63,6 +66,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICertificateRepository, CertificateRepository>();
 builder.Services.AddScoped<ICertificateService, CertificateService>();
 
+builder.Services.AddScoped<IAllCertifService, AllCertifService>();
+builder.Services.AddScoped<IAllCertifRepository, AllCertifRepository>();
 
 builder.Services.AddScoped<IDepartementRepository, DepartementRepository>();
 builder.Services.AddScoped<IDepartementService, DepartementService>();
