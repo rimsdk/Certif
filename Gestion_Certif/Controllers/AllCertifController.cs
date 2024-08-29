@@ -18,7 +18,7 @@ namespace Gestion_Certif.Controllers
         [HttpGet("by-departement")]
         public async Task<ActionResult<IEnumerable<AllCertifVM>>> GetCertifsByDepartement([FromQuery] int departementId, [FromQuery] string departementName)
         {
-           
+            
 
             var certifs = await _allCertifService.GetCertifsByDepartementAsync(departementId);
             return Ok(certifs);

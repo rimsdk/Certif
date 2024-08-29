@@ -18,15 +18,20 @@ namespace Gestion_Certif.Mappers
             };
         }
 
-        public static AllCertifVM ToViewModel(AllCertif model)
+        public static AllCertifVM ToViewModel(AllCertif certif)
         {
             return new AllCertifVM
             {
-                Id = model.id,
-                CertifName = model.certifName,
-                CertifUrl = model.certifUrl,
-                DepartementId = model.DepartementId,
-                CertifPictureUrl = model.CertifPictureUrl
+                Id = certif.id,
+                CertifName = certif.certifName,
+                CertifUrl = certif.certifUrl,
+                DepartementId = certif.DepartementId,
+                CertifPictureUrl = certif.CertifPictureUrl,
+                Departement = new DepartementVM
+                {
+                    Id = certif.departement.id,
+                    Name = certif.departement.name
+                }
             };
         }
 

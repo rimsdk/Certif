@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gestion_Certif.Model;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Gestion_Certif.ViewModels
@@ -14,7 +15,8 @@ namespace Gestion_Certif.ViewModels
 
         public DateTime AchievementDate { get; set; }
             public int DepartementId { get; set; }
-            public int UserId { get; set; }
+      
+        public int UserId { get; set; }
         
 
 
