@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Gestion_Certif.Model;
+using Gestion_Certif.ViewModels;
 
 namespace Gestion_Certif.Controllers
 {
@@ -16,10 +17,11 @@ namespace Gestion_Certif.Controllers
         }
 
         // GET: api/UserCertif/User/5
+        // GET: api/UserCertif/User/5
         [HttpGet("User/{userId}")]
-        public async Task<ActionResult<IEnumerable<AllCertif>>> GetUserCertifs(int userId)
+        public async Task<ActionResult<IEnumerable<Certificat>>> GetUserCertifs(int userId)
         {
-            // Get the user and their department
+            // Check if the user exists
             var user = await _context.Users
                 .Include(u => u.departement)
                 .FirstOrDefaultAsync(u => u.id == userId);
@@ -29,19 +31,27 @@ namespace Gestion_Certif.Controllers
                 return NotFound("User not found.");
             }
 
-            var departmentId = user.DepartementId;
+            // Get certificates directly associated with the user
+            var userCertifs = await _context.Certificats
+            .Where(c => c.userId == userId)
+     .Select(c => new CertificateDTO
+     {
+         Id = c.id,
+         CertifName = c.certifName,
+         CertifPictureUrl = c.CertifPictureUrl,
+         AchievementDate = c.achievementDate,
+         DepartmentName = c.departement.name
+     })
+     .ToListAsync();
 
-            // Get certificates for the department
-            var userCertifs = await _context.AllCertifs
-                .Where(c => c.DepartementId == departmentId)
-                .ToListAsync();
 
             if (userCertifs == null || !userCertifs.Any())
             {
-                return NotFound("No certificates found for the department.");
+                return NotFound("No certificates found for the user.");
             }
 
             return Ok(userCertifs);
         }
+
     }
 }
