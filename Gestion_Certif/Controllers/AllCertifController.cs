@@ -15,18 +15,20 @@ namespace Gestion_Certif.Controllers
         {
             _allCertifService = allCertifService;
         }
-        [HttpGet("by-departement")]
-        public async Task<ActionResult<IEnumerable<AllCertifVM>>> GetCertifsByDepartement([FromQuery] int departementId, [FromQuery] string departementName)
+        [HttpGet("by-department/{departementId}")]
+        public async Task<IActionResult> GetCertifsByDepartement(int departementId)
         {
-            
-
             var certifs = await _allCertifService.GetCertifsByDepartementAsync(departementId);
+            if (certifs == null || !certifs.Any())
+            {
+                return NotFound();
+            }
             return Ok(certifs);
         }
 
-        
-    
-    [HttpGet]
+
+
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<AllCertifVM>>> GetAllCertifs()
         {
             var certifs = await _allCertifService.GetAllCertifsAsync();

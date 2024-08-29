@@ -38,12 +38,12 @@ namespace Gestion_Certif.Repository
             _context.AllCertifs.Remove(certif);
             await _context.SaveChangesAsync();
         }
-        // Implémentation de la méthode pour récupérer les certificats par ID de département
-        public async Task<IEnumerable<AllCertif>> GetCertifsByDepartementAsync(int departementId)
+        public async Task<IEnumerable<AllCertif>> GetByDepartementIdAsync(int departementId)
         {
             return await _context.AllCertifs
-                .Where(certif => certif.DepartementId == departementId && certif.departement.name == "all")
-                .ToListAsync();
+                                 .Include(c => c.departement) // Inclure les informations sur le département
+                                 .Where(c => c.DepartementId == departementId)
+                                 .ToListAsync();
         }
 
     }
