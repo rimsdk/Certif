@@ -4,7 +4,7 @@ namespace Gestion_Certif.Repository
 {
     public interface IAllCertifRepository
     {
-        Task<IEnumerable<AllCertif>> GetCertifsByDepartementAsync(int departementId);
+        Task<IEnumerable<AllCertif>> GetByDepartementIdAsync(int departementId);
         Task<IEnumerable<AllCertif>> GetAllAsync();
         Task<AllCertif> GetByIdAsync(int id);
         Task AddAsync(AllCertif certif);
