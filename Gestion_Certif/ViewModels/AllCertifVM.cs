@@ -7,6 +7,6 @@
         public string CertifUrl { get; set; }
         public int DepartementId { get; set; }
         public string? CertifPictureUrl { get; set; }
-       // public string DepartementName { get; set; }
+        public DepartementVM Departement { get; set; }
     }
 }
