@@ -40,7 +40,7 @@ namespace Gestion_Certif.Controllers
             var count = (await _certificateService.GetAllCertif()).Count();
             return Ok(count);
         }
-        /*
+
 
         //Get all  Certifs m3a count coalbs 
         [HttpGet("all-collaborators")]
@@ -51,7 +51,7 @@ namespace Gestion_Certif.Controllers
                 return NotFound("No collaborators found.");
 
             return Ok(collaborators);
-        }*/
+        }
 
         // GET api/Certificate/5
         [HttpGet("{id}")]
@@ -129,6 +129,19 @@ namespace Gestion_Certif.Controllers
             }
 
 
+        }
+
+
+
+
+        [HttpGet("top-approved")]
+        public async Task<IActionResult> GetTopApprovedCertificates()
+        {
+            var certificates = await _certificateService.GetTopApprovedCertificatesAsync();
+            if (certificates == null || !certificates.Any())
+                return NotFound("No approved certificates found.");
+
+            return Ok(certificates);
         }
     }
 }

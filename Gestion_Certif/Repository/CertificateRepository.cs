@@ -82,15 +82,23 @@ namespace Gestion_Certif.Repository
             _context.Entry(certificat).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+<<<<<<< HEAD
         
         public async Task<List<CertificateInfo>> GetCertificatesWithMostApprovalsAsync()
         {
             return await _context.Request_Certifs
                 .Join(_context.Certificats, rc => rc.AllCertifId, c => c.id, (rc, c) => new { rc, c })
+=======
+
+        public async Task<List<CertificateData>> GetCertificatesWithMostApprovalsAsync()
+        {
+            return await _context.Request_Certifs
+                .Join(_context.AllCertifs, rc => rc.AllCertifId, c => c.id, (rc, c) => new { rc, c })
+>>>>>>> e198897e4e056c3dce016972bb2d359cef6e4999
                 .Join(_context.Departements, crc => crc.c.DepartementId, d => d.id, (crc, d) => new { crc.rc, crc.c, d })
                 .Where(x => x.rc.status == "Approved")
                 .GroupBy(x => new { x.c.id, x.c.certifName, x.d.name })
-                .Select(g => new CertificateInfo
+                .Select(g => new CertificateData
                 {
                     CertificatId = g.Key.id,
                     CertifName = g.Key.certifName,
@@ -101,7 +109,11 @@ namespace Gestion_Certif.Repository
                 .ThenBy(x => x.DepartmentName)
                 .ToListAsync();
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> e198897e4e056c3dce016972bb2d359cef6e4999
         public async Task<List<Certificat>> GetCertifsByDepartement(int departementId)
         {
             return await _context.Certificats
@@ -118,9 +130,27 @@ namespace Gestion_Certif.Repository
                 .ToListAsync();
         }
         */
-        public Task<List<CertificateWithCollaboratorCountVM>> GetAllCollaboratorsAsync()
+
+
+
+
+
+        public async Task<List<CertificateWithCollaboratorCountVM>> GetAllCollaboratorsAsync()
         {
-            throw new NotImplementedException();
+            var certificatesWithCounts = await _context.AllCertifs
+                .Join(_context.Request_Certifs, cert => cert.id, req => req.AllCertifId, (cert, req) => new { cert, req })
+                .Join(_context.Users, combined => combined.req.id, user => user.Request_certifId, (combined, user) => new { combined.cert, user })
+                .Where(cu => cu.user.UserType == "Collaborator")
+                .GroupBy(cu => new { cu.cert.id, cu.cert.certifName })
+                .Select(grouped => new CertificateWithCollaboratorCountVM
+                {
+                    CertificateId = grouped.Key.id,
+                    CertificateName = grouped.Key.certifName,
+                    CollaboratorCount = grouped.Select(g => g.user.id).Distinct().Count()
+                })
+                .ToListAsync();
+            return certificatesWithCounts;
         }
+    
     }
 }
