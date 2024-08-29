@@ -4,6 +4,7 @@ namespace Gestion_Certif.Service
 {
     public interface IAllCertifService
     {
+        Task<IEnumerable<AllCertifVM>> GetCertifsByDepartementAsync(int departementId);
         Task<IEnumerable<AllCertifVM>> GetAllCertifsAsync();
         Task<AllCertifVM> GetCertifByIdAsync(int id);
         Task<AllCertifVM> CreateCertifAsync(AllCertifVM certifVM);
