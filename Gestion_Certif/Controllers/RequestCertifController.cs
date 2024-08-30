@@ -106,6 +106,7 @@ namespace Gestion_Certif.Controllers
                     SenderId = r.SenderId,
                     ReceiverId = r.ReceiverId,
                     AllCertifId = r.AllCertifId,
+                    AllCertifName = r.AllCertif.certifName,
                 })
                 .ToListAsync();
 
@@ -201,6 +202,7 @@ namespace Gestion_Certif.Controllers
                     SenderId = rc.SenderId,
                     ReceiverId = rc.ReceiverId,
                     AllCertifId = rc.AllCertifId,
+                    AllCertifName = rc.AllCertif.certifName,
                     SenderName = rc.Sender.username,
                 })
                 .ToListAsync();
