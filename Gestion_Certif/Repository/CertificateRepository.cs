@@ -104,6 +104,7 @@ namespace Gestion_Certif.Repository
                 .ToListAsync();
         }
 
+
         public async Task<List<Certificat>> GetCertifsByDepartement(int departementId)
         {
             return await _context.Certificats

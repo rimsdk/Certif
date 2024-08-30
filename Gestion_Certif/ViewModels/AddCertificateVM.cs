@@ -18,7 +18,6 @@ namespace Gestion_Certif.ViewModels
 
             public int UserId { get; set; }
         public User? Sender { get; set; }
-       
 
 
 
